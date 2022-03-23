@@ -30,17 +30,24 @@ class StudentDetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        viewModel.fetch()
-        observeViewModel()
+        arguments?.let {
+            val getId = StudentListFragmentArgs.fromBundle(requireArguments()).id
+            viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+            viewModel.fetch(getId)
+            observeViewModel()
+        }
+
     }
 
     private fun observeViewModel() {
         viewModel.studentLoadData.observe(viewLifecycleOwner) {
-            editID.setText(it.id)
-            editName.setText(it.name)
-            editDOB.setText(it.dob)
-            editPhone.setText(it.phone)
+            val student = viewModel.studentLoadData.value
+            student?.let {
+                editID.setText(it.id)
+                editName.setText(it.name)
+                editPhone.setText(it.phone)
+                editDOB.setText(it.dob)
+            }
         }
     }
 

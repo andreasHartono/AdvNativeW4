@@ -31,10 +31,8 @@ class ListViewModel(application: Application) :AndroidViewModel(application) {
         )*/
         loadingLiveData.value = true
         studentLoadErrorLiveData.value = false
-
         queue = Volley.newRequestQueue(getApplication())
         val url = "http://adv.jitusolution.com/student.php"
-
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
